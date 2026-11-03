@@ -14,7 +14,7 @@
 ## Подробное описание — EN
 Glass Tab turns every new tab into a calm, beautiful glass-style dashboard.
 
-✦ Smart search bar — type a calculation like (25+17)*3, "5 km to miles" or "72 F to C" and get the answer instantly. Switch between Google, Brave, DuckDuckGo, Bing, Yandex, Baidu, Naver, Yahoo Japan and more, or add your own.
+✦ Smart search bar — type a calculation like (25+17)*3, "5 km to miles" or "72 F to C" and get the answer instantly. Pick your favorite search engine or add your own.
 ✦ Weather — current conditions, 24-hour temperature graph, 3-day forecast and a short tip. Celsius or Fahrenheit.
 ✦ Tasks — a to-do list with a progress ring.
 ✦ Calendar — month view with today highlighted.
@@ -34,7 +34,7 @@ Free and open source (MIT). If you enjoy it, you can support the project from th
 ## Подробное описание — RU
 Glass Tab превращает каждую новую вкладку в спокойную и красивую панель в стиле стекла.
 
-✦ Умная строка поиска — введите (25+17)*3, «5 км в мили» или «25 C в F» и сразу получите ответ. Google, Brave, DuckDuckGo, Bing, Яндекс, Baidu, Naver, Yahoo Japan или свой поисковик.
+✦ Умная строка поиска — введите (25+17)*3, «5 км в мили» или «25 C в F» и сразу получите ответ. Выбирайте любимую поисковую систему или добавьте свою.
 ✦ Погода — сейчас, график на 24 часа, прогноз на 3 дня и короткий совет. °C или °F.
 ✦ Дела — список задач с кольцом прогресса.
 ✦ Календарь — месяц с подсветкой сегодняшнего дня.
