@@ -31,11 +31,11 @@ def build(name, manifest_data):
 
 build(f'GlassTab-{ver}.zip', manifest)
 
-# Firefox: нужен идентификатор расширения и заявление, что данные не собираются
+# Firefox: нужен идентификатор расширения и заявление о данных (город, введённый пользователем, уходит погодному сервису)
 ff = json.loads(json.dumps(manifest))
 ff['browser_specific_settings'] = {'gecko': {
     'id': 'glass-tab@glasstab.app',
     'strict_min_version': '140.0',
-    'data_collection_permissions': {'required': ['none']}
+    'data_collection_permissions': {'required': ['locationInfo']}
 }}
 build(f'GlassTab-{ver}-firefox.zip', ff)
