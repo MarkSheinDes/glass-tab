@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- Служебная страница для баннеров магазина (?s=small 440x280, ?s=marquee 1400x560). В zip не входит. -->
+<meta charset="utf-8">
+<link rel="stylesheet" href="../css/glass.css">
+<style>
+  html { background: #cfe4fb; }
+  body { margin: 0; overflow: hidden; position: relative; }
+  .bg { position: absolute; inset: 0; background:
+    radial-gradient(ellipse 75% 70% at 12% 8%, #7dd3fcaa, transparent 70%),
+    radial-gradient(ellipse 62% 60% at 92% 28%, #c4b5fdaa, transparent 70%),
+    radial-gradient(ellipse 75% 70% at 45% 105%, #a5f3fcaa, transparent 70%),
+    radial-gradient(ellipse 62% 60% at 78% 85%, #93c5fdaa, transparent 70%), #e8f1fb; }
+  .wrap { position: relative; display: flex; align-items: center; height: 100%; }
+  .brand { display: flex; align-items: center; gap: 22px; }
+  .brand img { width: var(--ico); height: var(--ico); border-radius: 22%; box-shadow: 0 10px 30px rgba(40,60,120,.3); }
+  .brand h1 { margin: 0; font-size: var(--h); font-weight: 700; letter-spacing: -.5px; color: #111216; line-height: 1.05; }
+  .brand p { margin: 8px 0 0; font-size: var(--pt); font-weight: 500; color: rgba(20,24,36,.75); line-height: 1.3; }
+  .shot { position: absolute; border-radius: 26px; overflow: hidden; box-shadow: 0 30px 80px rgba(40,60,120,.35), 0 0 0 1px rgba(255,255,255,.8); }
+  .shot iframe { width: 1280px; height: 800px; border: 0; transform-origin: 0 0; display: block; }
+</style>
+<div class="bg"></div>
+<div class="wrap" id="w"><div class="brand"><img src="../icons/icon128.png" alt=""><div><h1>Glass Tab</h1><p id="tag"></p></div></div></div>
+<script>
+const s = new URLSearchParams(location.search).get('s') || 'small';
+const w = document.getElementById('w'), root = document.documentElement.style;
+if (s === 'small') {
+  document.body.style.cssText = 'width:440px;height:280px';
+  w.style.justifyContent = 'center'; w.style.padding = '0 24px';
+  root.setProperty('--ico', '96px'); root.setProperty('--h', '40px'); root.setProperty('--pt', '17px');
+  document.getElementById('tag').innerHTML = 'Liquid Glass<br>new tab page';
+} else {
+  document.body.style.cssText = 'width:1400px;height:560px';
+  w.style.paddingLeft = '90px';
+  root.setProperty('--ico', '132px'); root.setProperty('--h', '64px'); root.setProperty('--pt', '24px');
+  document.getElementById('tag').innerHTML = 'Smart search, weather, tasks,<br>calendar and focus timer';
+  const d = document.createElement('div'); d.className = 'shot';
+  d.style.cssText = 'left:690px;top:70px;width:900px;height:560px';
+  d.innerHTML = '<iframe src="shot.html?n=1" style="transform:scale(.703)"></iframe>';
+  document.body.append(d);
+}
+</script>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Tab</title>
+  <script src="js/boot.js"></script>
+  <link rel="stylesheet" href="css/glass.css">
+</head>
+<body>
+  <div id="wall" aria-hidden="true"></div>
+
+  <!-- Every widget has a data-w id; they can be hidden and rearranged in edit mode. -->
+  <main id="board" class="board">
+    <section class="widget" data-w="clock">
+      <div class="card w-clock"><time class="clock" id="clock">00:00</time><div class="gr"><b id="greet">Hello!</b><span id="date"></span></div></div>
+    </section>
+
+    <section class="widget" data-w="wxpill"><div class="pill" id="wxPill"><span id="pillIcon"></span><b id="pillTemp"></b><i id="pillCity"></i></div></section>
+    <section class="widget" data-w="theme">
+      <div class="seg" id="themeSeg" role="radiogroup" aria-label="Theme" data-i18n-aria="ariaTheme">
+        <button type="button" data-v="auto" data-i18n="themeAuto">Auto</button><button type="button" data-v="day" data-i18n="themeDay">Day</button><button type="button" data-v="night" data-i18n="themeNight">Night</button>
+      </div>
+    </section>
+
+    <section class="widget" data-w="search">
+      <form class="search" id="searchForm">
+        <i class="sIco"></i>
+        <input id="q" type="text" placeholder="Search the web or enter address…" autocomplete="off" spellcheck="false" data-i18n-ph="searchPlaceholder">
+        <kbd>/</kbd>
+        <button type="button" class="eng" id="engBtn" aria-haspopup="true"></button>
+      </form>
+      <div class="answer card" id="answer" hidden></div>
+      <div class="chiprow" id="quick"></div>
+    </section>
+
+    <section class="widget" data-w="weather">
+      <div class="card w w-wx">
+        <h3><span id="wxHeadIcon"></span><span id="wxHead" data-i18n="weather">Weather</span></h3>
+        <div class="big"><span class="ic" id="wxBigIcon"></span><div class="t" id="wxTemp">–</div><div class="d"><b id="wxText" data-i18n="weatherLoading">loading…</b><span id="wxFeels"></span></div></div>
+        <form class="field wxSetup" id="wxSetup" hidden><input id="wxCityInput" placeholder="e.g. Berlin" autocomplete="off" data-i18n-ph="cityPlaceholder"><button type="submit" class="mini on" data-i18n="citySearchBtn">Find</button></form>
+        <svg class="spark" id="spark" viewBox="0 0 400 80" preserveAspectRatio="none"></svg>
+        <div class="hrs" id="sparkLabels"></div>
+        <div class="facts" id="wxFacts"></div>
+        <div class="days" id="wxDays"></div>
+        <div class="advice" id="wxAdvice"></div>
+      </div>
+    </section>
+
+    <section class="widget" data-w="tasks">
+      <div class="card w w-tasks">
+        <div class="head2">
+          <h3 data-i18n="tasksTitle">Today's Tasks</h3>
+          <div class="headActions">
+            <button type="button" class="mini clearDone" id="todoClearDone" hidden data-i18n-title="clearDoneTitle" data-i18n="clearDone">Clear completed</button>
+            <div class="ring" id="todoRing"><span>0/0</span></div>
+          </div>
+        </div>
+        <form class="field" id="todoForm"><input id="todoInput" placeholder="Add a task…" autocomplete="off" data-i18n-ph="taskPlaceholder"><button class="add" aria-label="Add" data-i18n-title="taskAdd"></button></form>
+        <ul id="todoList"></ul>
+      </div>
+    </section>
+
+    <section class="widget" data-w="calendar">
+      <div class="card w w-cal">
+        <div class="cal-head">
+          <div class="cal-title" id="calTitle"></div>
+          <div class="cal-nav">
+            <button type="button" class="mini-icon" id="calPrev" data-i18n-title="calPrevTitle"></button>
+            <button type="button" class="mini-btn" id="calToday" data-i18n="calToday">Today</button>
+            <button type="button" class="mini-icon" id="calNext" data-i18n-title="calNextTitle"></button>
+          </div>
+        </div>
+        <div class="cal-days-head" id="calDaysHead">
+          <span class="we">Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span class="we">Sat</span>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-foot" id="calFoot">
+          <span class="cal-info" id="calInfo"></span>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="widget" data-w="timer">
+      <div class="card w w-timer">
+        <h3 data-i18n="timerTitle">Focus timer</h3>
+        <div class="seg small timerSeg" id="timerSeg"><button type="button" data-m="focus" data-i18n="timerFocusBtn">Focus</button><button type="button" data-m="short" data-i18n="timerShortBtn">Break</button><button type="button" data-m="long" data-i18n="timerLongBtn">Long</button></div>
+        <div class="timerBody">
+          <div class="ring big" id="timerRing"><div class="tc"><b id="timerTime">25:00</b><span id="timerLabel"></span></div></div>
+          <div class="timerBtns"><button type="button" class="mini-icon" id="timerReset" data-i18n-title="timerReset" aria-label="Reset"></button><button type="button" class="playBtn" id="timerMain"></button></div>
+        </div>
+        <div class="timerCount" id="timerCount"></div>
+      </div>
+    </section>
+
+    <section class="widget" data-w="snippets">
+      <div class="card w w-snip">
+        <div class="head2">
+          <h3 data-i18n="snipTitle">Quick Clipboard</h3>
+          <button type="button" class="mini-icon" id="snipAddBtn" data-i18n-title="snipAdd" aria-label="Add snippet"></button>
+        </div>
+        <div class="snip-list" id="snipList"></div>
+        <div class="snip-note" data-i18n="snipNote">Click to copy to clipboard</div>
+      </div>
+    </section>
+
+
+    <section class="widget" data-w="note">
+      <div class="card w w-note"><h3 data-i18n="noteTitle">Notes</h3><textarea id="noteText" placeholder="Quick note — saves automatically" spellcheck="false" data-i18n-ph="notePlaceholder"></textarea></div>
+    </section>
+
+  </main>
+
+  <nav class="widget dock" data-w="dock" id="dock" aria-label="Bottom dock" data-i18n-aria="ariaDock">
+    <button class="dbtn" id="bmBtn" type="button"></button>
+    <span class="sep"></span>
+    <div class="tiles" id="dockTiles"></div>
+    <span class="sep"></span>
+    <button class="dbtn" id="appsBtn" type="button"></button>
+    <button class="dbtn" id="aiBtn" type="button"></button>
+  </nav>
+
+  <div class="popover" id="pop" hidden></div>
+  <div class="toast" id="toast" hidden></div>
+
+  <div class="editbar card" id="editbar" hidden>
+    <b data-i18n="editBarTitle">Edit Mode</b><span data-i18n="editBarHint">Drag widgets with the mouse, × hides a widget</span>
+    <button type="button" class="mini" id="blocksBtn" data-i18n="editBlocksBtn">Widgets</button>
+    <button type="button" class="mini" id="layoutReset" data-i18n="editResetBtn">Reset layout</button>
+    <button type="button" class="mini on" id="editDone" data-i18n="editDoneBtn">Done</button>
+  </div>
+
+  <div class="corner" id="corner">
+    <button class="round" id="editBtn" aria-label="Customize layout" title="Customize layout" data-i18n-title="editBtnTitle"></button>
+    <button class="round" id="wallBtn" aria-label="Wallpapers" title="Wallpapers" data-i18n-title="wallBtnTitle"></button>
+    <button class="round" id="setBtn" aria-label="Settings" title="Settings" data-i18n-title="setBtnTitle"></button>
+  </div>
+
+  <section class="panel blocksPanel" id="blocksPanel" hidden><h3 data-i18n="blocksPanelTitle">Widgets on Screen</h3><div id="blocksList"></div></section>
+
+  <section class="panel wallPanel" id="wallPanel" hidden>
+    <div class="head"><b data-i18n="wallTitle">Wallpapers</b><div class="seg small" id="wallTabs"><button type="button" data-t="day" data-i18n="wallDay">Day</button><button type="button" data-t="night" data-i18n="wallNight">Night</button></div></div>
+    <div class="actions"><button type="button" data-a="upload" data-i18n="wallUpload">Upload image</button><button type="button" data-a="remove" hidden data-i18n="wallRemove">Remove image</button><button type="button" data-a="anim"></button><button type="button" data-a="random" data-i18n="wallRandom">Random</button></div>
+    <div class="grid" id="wallGrid"></div>
+  </section>
+
+  <section class="panel setPanel" id="setPanel" hidden>
+    <h3 data-i18n="settingsTitle">Settings</h3>
+
+    <label class="lbl" data-i18n="langLbl">Interface language</label>
+    <div class="seg small" id="langSeg">
+      <button type="button" data-v="en">English</button>
+      <button type="button" data-v="ru">Русский</button>
+    </div>
+
+    <label class="lbl" data-i18n="widgetsLabel">Widgets on screen</label>
+    <div class="checks" id="widgetChecks"></div>
+
+    <label class="lbl" data-i18n="cityLabel">Weather City</label>
+    <form class="row" id="cityForm"><input id="cityInput" placeholder="e.g. Berlin" autocomplete="off" data-i18n-ph="cityPlaceholder"><button type="submit" class="mini" data-i18n="citySearchBtn">Find</button></form>
+    <div class="note" id="cityNote"></div>
+    <label class="lbl" data-i18n="tempLabel">Temperature</label>
+    <div class="seg small" id="unitSeg"><button type="button" data-v="c">°C</button><button type="button" data-v="f">°F</button></div>
+
+    <label class="lbl" data-i18n="windLabel">Wind speed</label>
+    <div class="seg small" id="windSeg"><button type="button" data-v="kmh">km/h</button><button type="button" data-v="mph">mph</button><button type="button" data-v="ms">m/s</button></div>
+
+    <label class="lbl" data-i18n="timeLabel">Time format</label>
+    <div class="seg small" id="timeSeg"><button type="button" data-v="12">12 h</button><button type="button" data-v="24">24 h</button></div>
+
+    <label class="lbl" data-i18n="weekLabel">Week starts on</label>
+    <div class="seg small" id="weekSeg"><button type="button" data-v="1" data-i18n="wkMon">Mon</button><button type="button" data-v="7" data-i18n="wkSun">Sun</button><button type="button" data-v="6" data-i18n="wkSat">Sat</button></div>
+    
+    <label class="lbl" data-i18n="enginesLabel">Search Engines</label>
+    <div id="engList" class="engList"></div>
+    <div class="engAddBox">
+      <div class="row">
+        <input class="n" id="newEngName" placeholder="Name (e.g. DuckDuckGo)" autocomplete="off" data-i18n-ph="engNamePlaceholder">
+        <input class="u" id="newEngUrl" placeholder="Search URL (with %s or without)" autocomplete="off" data-i18n-ph="engUrlPlaceholder">
+      </div>
+      <button type="button" class="mini wide" id="newEngAdd" data-i18n="engAddBtn">+ Add search engine</button>
+    </div>
+
+    <label class="lbl" data-i18n="appearanceLabel">Appearance & Accessibility</label>
+    <div class="checks">
+      <label class="ck"><input type="checkbox" id="iconsCheck"><span data-i18n="iconsCheck">Site icons in the dock</span></label>
+      <label class="ck"><input type="checkbox" id="contrastCheck"><span data-i18n="contrastCheck">High contrast</span></label>
+    </div>
+
+    <label class="lbl" data-i18n="perfLabel">Performance (low-spec PCs)</label>
+    <div class="checks">
+      <label class="ck"><input type="checkbox" id="perfCheck"><span data-i18n="perfCheck">Power saver (no blur)</span></label>
+      <label class="ck"><input type="checkbox" id="animCheck"><span data-i18n="animCheck">Interface animations</span></label>
+    </div>
+
+    <label class="lbl" data-i18n="sitesLabel">My Sites (bottom dock tiles)</label>
+    <div id="shortList"></div>
+    <button type="button" class="mini wide" id="shortAdd" data-i18n="siteAddBtn">+ Add website</button>
+
+    <label class="lbl" data-i18n="servicesLabel">Services menu</label>
+    <div id="servList"></div>
+    <button type="button" class="mini wide" id="servAdd" data-i18n="servicesAdd">+ Add service</button>
+    <button type="button" class="mini wide" id="servReset" data-i18n="servicesReset">Reset to Google services</button>
+    <button type="button" class="mini wide on" id="donateBtn" hidden aria-haspopup="true">♥ <span data-i18n="donateBtn">Support the project</span></button>
+    <button type="button" class="mini wide" id="rerunSetup" data-i18n="rerunSetup">Run setup again</button>
+    <button type="button" class="mini wide danger" id="resetAll" data-i18n="resetAllBtn">Reset all settings</button>
+    <div class="aboutLine"><span id="verTxt">Glass Tab</span><a id="privacyLink" target="_blank" rel="noopener" hidden data-i18n="privacyLink">Privacy policy</a></div>
+  </section>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

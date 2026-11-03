@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Служебная страница для съёмки скриншотов магазина. В zip расширения не входит. -->
+<meta charset="utf-8">
+<style>html,body{margin:0;background:#000;overflow:hidden}iframe{width:1280px;height:800px;border:0;display:block}</style>
+<iframe id="f"></iframe>
+<script>
+const n = Number(new URLSearchParams(location.search).get('n') || 1);
+Object.keys(localStorage).filter(k => k.startsWith('gt.')).forEach(k => localStorage.removeItem(k));
+const S = (k, v) => localStorage.setItem('gt.' + k, JSON.stringify(v));
+S('anim', false); S('seenTip', true);
+const ALL = {}; ['weather','tasks','calendar','timer','snippets','note'].forEach(i => ALL[i] = { hidden: false });
+if (n !== 6) S('layout', ALL);
+S('city', { name: 'London', lat: 51.5072, lon: -0.1276, country: 'United Kingdom' });
+S('todos', [{ text: 'Plan the week', done: true }, { text: 'Reply to Anna', done: false }, { text: 'Book a table for Friday', done: false }, { text: 'Finish the presentation', done: false }]);
+S('note', 'Ideas for the weekend:\n— long walk by the river\n— try the new ramen place\n— call Mom');
+const cfg = {
+  1: { lang: 'en', theme: 'day', wallDay: 21, q: '5 km to miles' },
+  2: { lang: 'en', theme: 'night', wallNight: 2, q: '(25+17)*3' },
+  3: { lang: 'en', theme: 'day', wallDay: 24, open: 'setBtn' },
+  4: { lang: 'en', theme: 'night', wallNight: 1, open: 'wallBtn' },
+  6: { lang: 'en', theme: 'day', wallDay: 21 },
+  5: { lang: 'ru', theme: 'day', wallDay: 23, q: '5 км в мили', city: { name: 'Москва', lat: 55.7558, lon: 37.6173, country: 'Россия' },
+       todos: [{ text: 'Составить план на неделю', done: true }, { text: 'Ответить Ане', done: false }, { text: 'Забронировать столик', done: false }], note: 'Идеи на выходные:\n— прогулка по набережной\n— новое кафе\n— позвонить маме' }
+}[n];
+S('lang', cfg.lang); S('theme', cfg.theme);
+if (cfg.wallDay != null) S('wallDay', cfg.wallDay);
+if (cfg.wallNight != null) S('wallNight', cfg.wallNight);
+if (cfg.city) S('city', cfg.city);
+if (cfg.todos) S('todos', cfg.todos);
+if (cfg.note) S('note', cfg.note);
+const f = document.getElementById('f');
+f.src = '../newtab.html';
+f.onload = () => setTimeout(() => {
+  const d = f.contentDocument;
+  if (cfg.q) { const q = d.getElementById('q'); q.value = cfg.q; q.dispatchEvent(new Event('input')); }
+  if (cfg.open) d.getElementById(cfg.open).click();
+}, 3500);
+</script>
