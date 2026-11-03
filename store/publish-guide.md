@@ -25,8 +25,7 @@
 ## 3. Вкладка «Privacy» (Конфиденциальность)
 1. **Single purpose description:**
    `Replaces the browser's New Tab page with a customizable dashboard (search, weather, tasks, calendar, notes, focus timer).`
-2. **Permission justification** (по каждому пункту, что спросит):
-   - `Host permission (api.open-meteo.com, geocoding-api.open-meteo.com)`: `Used to look up the city the user types and to show its weather forecast. Only the city name and its coordinates are sent; nothing else.`
+2. **Permission justification** (по каждому пункту, что спросит; раньше был ещё пункт про доступ к хостам, в версии 1.0.0 его уже нет):
    - `bookmarks` (необязательное разрешение): `Requested only when the user clicks “Bookmarks” in the dock, to display their bookmarks list. Read-only; nothing is sent or modified.`
 3. **Remote code:** `No, I am not using remote code`.
 4. **Data usage:** отметьте **Location** (пользователь вводит название города, оно отправляется погодному сервису; мы его не собираем и не храним у себя). Остальные категории не отмечайте. Затем поставьте три галочки (данные не продаются, не используются не по назначению, не используются для кредитных решений).

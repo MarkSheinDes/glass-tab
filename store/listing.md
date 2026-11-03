@@ -59,7 +59,6 @@ Replaces the browser's New Tab page with a customizable dashboard (search, weath
 
 ## Обоснование разрешений (Permission justification)
 - `chrome_url_overrides.newtab` — это и есть основная функция: заменяет страницу новой вкладки.
-- Host `api.open-meteo.com`, `geocoding-api.open-meteo.com` — найти введённый пользователем город и получить прогноз погоды.
 - Optional `bookmarks` — запрашивается только по нажатию «Закладки»; показывает список закладок, ничего не изменяет.
 
 ## Раздел «Конфиденциальность» (Privacy practices)
