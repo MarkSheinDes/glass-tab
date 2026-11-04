@@ -1,4 +1,4 @@
-// Региональные привычки: формат времени, градусы, скорость ветра, начало недели, поисковики по умолчанию.
+// Региональные привычки: формат времени, градусы, скорость ветра, начало недели.
 // Всё определяется по региону браузера и меняется в настройках; сохранённый выбор пользователя главнее.
 import { get } from './store.js';
 import { getLang } from './i18n.js';
@@ -63,14 +63,6 @@ export function weekendDays() {
   return SAT_FIRST.has(region()) && region() !== 'AE' ? [5, 6] : [6, 7];
 }
 export const isoDay = d => d.getDay() || 7;
-
-// ---------- поисковики по регионам ----------
-export const REGION_ENGINES = {
-  RU: { enable: ['yandex'], main: 'yandex' }, BY: { enable: ['yandex'], main: 'yandex' }, KZ: { enable: ['yandex'], main: 'yandex' },
-  CN: { enable: ['baidu', 'bing'], main: 'baidu' },
-  KR: { enable: ['naver'], main: 'naver' },
-  JP: { enable: ['yahoojp'], main: 'google' }
-};
 
 // 'HH:MM' из прогноза (время города) -> строка в выбранном формате; Intl не нужен, часовой пояс не трогаем
 export function fmtHourLabel(hhmm) {

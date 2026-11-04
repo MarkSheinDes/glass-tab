@@ -1,62 +1,12 @@
 // Умная строка поиска: поиск, ответы (калькулятор, валюты, единицы), быстрые подсказки.
-import { get, set } from './store.js';
 import { svg } from './icons.js';
 import { smart } from './smart.js';
-import { t, getLang } from './i18n.js';
-import { region, REGION_ENGINES } from './region.js';
-import { $, esc, toast, popover, closePopover } from './ui.js';
-
-// Набор по умолчанию зависит от региона: Яндекс — для русского, Baidu — Китай, Naver — Корея, Yahoo! JAPAN — Япония
-export const defaultEngines = () => {
-  const ru = getLang() === 'ru', reg = REGION_ENGINES[region()] || { enable: [] };
-  const on = id => reg.enable.includes(id) || (id === 'yandex' && ru);
-  return [
-    { id: 'google', name: 'Google', ch: 'G', url: 'https://www.google.com/search?q=', enabled: region() !== 'CN', custom: false },
-    { id: 'yandex', name: ru ? 'Яндекс' : 'Yandex', ch: ru ? 'Я' : 'Y', url: 'https://yandex.ru/search/?text=', enabled: on('yandex'), custom: false },
-    { id: 'brave', name: 'Brave', ch: 'B', url: 'https://search.brave.com/search?q=', enabled: true, custom: false },
-    { id: 'duck', name: 'DuckDuckGo', ch: 'D', url: 'https://duckduckgo.com/?q=', enabled: !ru, custom: false },
-    { id: 'bing', name: 'Bing', ch: 'B', url: 'https://www.bing.com/search?q=', enabled: on('bing'), custom: false },
-    { id: 'baidu', name: 'Baidu', ch: '百', url: 'https://www.baidu.com/s?wd=', enabled: on('baidu'), custom: false },
-    { id: 'naver', name: 'Naver', ch: 'N', url: 'https://search.naver.com/search.naver?query=', enabled: on('naver'), custom: false },
-    { id: 'yahoojp', name: 'Yahoo! JAPAN', ch: 'Y', url: 'https://search.yahoo.co.jp/search?p=', enabled: on('yahoojp'), custom: false },
-    { id: 'ecosia', name: 'Ecosia', ch: 'E', url: 'https://www.ecosia.org/search?q=', enabled: false, custom: false },
-    { id: 'startpage', name: 'Startpage', ch: 'S', url: 'https://www.startpage.com/do/search?q=', enabled: false, custom: false }
-  ];
-};
-
-export function getEngines() {
-  const saved = get('searchEngines', null), removed = get('enginesRemoved', []), defs = defaultEngines().filter(d => !removed.includes(d.id));
-  if (!Array.isArray(saved) || !saved.length) return defs;
-  // новые поисковики из обновлений появляются в списке выключенными (кроме тех, что человек сам удалил)
-  const named = saved.map(s => { const d = !s.custom && defs.find(x => x.id === s.id); return d ? { ...s, name: d.name, ch: d.ch } : s; });   // названия встроенных — на текущем языке
-  return [...named, ...defs.filter(d => !saved.some(s => s.id === d.id)).map(d => ({ ...d, enabled: false }))];
-}
-
-export function saveEngines(list) {
-  set('searchEngines', list);
-  renderEngine();
-  document.dispatchEvent(new CustomEvent('gt:engines'));
-}
-
-export function getActiveEngine() {
-  const list = getEngines();
-  const enabled = list.filter(e => e.enabled);
-  const curId = get('engine', null) || (REGION_ENGINES[region()] || {}).main || 'google';
-  const found = enabled.find(e => e.id === curId);
-  if (found) return found;
-  if (enabled.length) return enabled[0];
-  return list[0] || defaultEngines()[0];
-}
+import { t } from './i18n.js';
+import { $, esc, toast } from './ui.js';
 
 const looksLikeUrl = q => /^(https?:\/\/\S+|[\w-]+(\.[\w-]+)+(:\d+)?(\/\S*)?)$/i.test(q);
 
 let current = null, seq = 0;
-
-export function renderEngine() {
-  const cur = getActiveEngine();
-  const ch = cur.ch || (cur.name ? cur.name[0].toUpperCase() : 'S');
-  $('engBtn').innerHTML = `<span class="badge">${esc(ch)}</span><span>${esc(cur.name)}</span>${svg('chev')}`;
-}
 
 function showAnswer(a) {
   const box = $('answer');
@@ -69,44 +19,19 @@ function showAnswer(a) {
   box.hidden = false;
 }
 
+// Обычный запрос уходит в поисковик, выбранный самим человеком в браузере (Search API)
 function goSearch(q) {
   if (looksLikeUrl(q)) {
     location.href = /^https?:/i.test(q) ? q : 'https://' + q;
-  } else {
-    const cur = getActiveEngine();
-    let url = cur.url || 'https://www.google.com/search?q=';
-    if (url.includes('%s')) {
-      location.href = url.replace('%s', encodeURIComponent(q));
-    } else {
-      location.href = url + encodeURIComponent(q);
-    }
+    return;
   }
+  const api = (globalThis.browser || globalThis.chrome).search;
+  if (api && api.query) api.query({ text: q, disposition: 'CURRENT_TAB' });
+  else if (api && api.search) api.search({ query: q, disposition: 'CURRENT_TAB' });
 }
 
 export function initSearch() {
   $('searchForm').querySelector('.sIco').innerHTML = svg('search');
-  renderEngine();
-
-  $('engBtn').addEventListener('click', e => {
-    e.stopPropagation();
-    const engines = getEngines().filter(eng => eng.enabled);
-    const active = getActiveEngine();
-    const html = '<div class="menu selectMenu">' + engines.map(eng => {
-      const isSel = eng.id === active.id;
-      const ch = eng.ch || (eng.name ? eng.name[0].toUpperCase() : 'S');
-      return `<button type="button" class="mi ${isSel ? 'on' : ''}" data-e="${esc(eng.id)}"><span class="badge">${esc(ch)}</span><span>${esc(eng.name)}</span>${isSel ? svg('check') : ''}</button>`;
-    }).join('') + '</div>';
-    popover($('engBtn'), html, p => p.querySelectorAll('[data-e]').forEach(b => b.addEventListener('click', () => {
-      set('engine', b.dataset.e);
-      renderEngine();
-      closePopover();
-      $('q').focus();
-    })));
-  });
-
-  document.addEventListener('gt:engines', renderEngine);
-  document.addEventListener('gt:lang', renderEngine);
-
   let timer = 0;
   $('q').addEventListener('input', () => {
     clearTimeout(timer);

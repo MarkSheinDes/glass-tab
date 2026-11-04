@@ -1,10 +1,9 @@
-// Панель «Настройки»: язык, город, температура, поисковые системы, читаемость, режим для слабых ПК, мои сайты, сброс.
+// Панель «Настройки»: язык, город, температура, читаемость, режим для слабых ПК, мои сайты, сброс.
 import { get, set, clearAll } from './store.js';
 import { svg } from './icons.js';
 import { geocode, currentPlace } from './weather.js';
 import { shortcuts, saveShortcuts, services, saveServices } from './dock.js';
 import { makeGlider } from './fx.js';
-import { getEngines, saveEngines } from './search.js';
 import { getLang, setLang, t } from './i18n.js';
 import { idbClear } from './idb.js';
 import { tempUnit, windUnit, timeSetting, weekStart } from './region.js';
@@ -40,69 +39,6 @@ export function initSettings(onWeather, onUnits) {
   widgetChecks.addEventListener('change', e => { if (e.target.value) setVisible(e.target.value, e.target.checked); });
   onVisible(buildWidgets);
   buildWidgets();
-
-  // поисковые системы
-  const engList = $('engList');
-  const renderEngineSettings = () => {
-    if (!engList) return;
-    const engines = getEngines();
-    engList.innerHTML = '';
-    engines.forEach(eng => {
-      const item = document.createElement('div');
-      item.className = 'engItem' + (eng.enabled ? ' on' : '');
-      const ch = eng.ch || (eng.name ? eng.name[0].toUpperCase() : 'S');
-      item.innerHTML = `
-        <span class="sw"><i></i></span>
-        <span class="badge">${esc(ch)}</span>
-        <span class="engTitle">${esc(eng.name)}</span>
-        ${engines.length > 1 ? `<button type="button" class="engDel" title="${esc(t('deleteBtn'))}" aria-label="${esc(t('deleteBtn'))}">${svg('x')}</button>` : ''}
-      `;
-      item.addEventListener('click', e => {
-        e.stopPropagation();
-        if (e.target.closest('.engDel')) {
-          // удалить можно любой поисковик, но один должен остаться; встроенные запоминаем, чтобы они не вернулись
-          const all = getEngines().filter(x => x.id !== eng.id);
-          if (!all.length) return;
-          if (!eng.custom) set('enginesRemoved', [...new Set([...get('enginesRemoved', []), eng.id])]);
-          if (!all.some(x => x.enabled)) all[0].enabled = true;
-          saveEngines(all);
-          renderEngineSettings();
-          return;
-        }
-        const all = getEngines();
-        const cur = all.find(x => x.id === eng.id);
-        if (!cur) return;
-        const enabledCount = all.filter(x => x.enabled).length;
-        if (cur.enabled && enabledCount <= 1) return; // минимум один поисковик должен оставаться
-        cur.enabled = !cur.enabled;
-        item.classList.toggle('on', cur.enabled);
-        saveEngines(all);
-      });
-      engList.appendChild(item);
-    });
-  };
-
-  const newEngAdd = $('newEngAdd');
-  if (newEngAdd) {
-    newEngAdd.addEventListener('click', e => {
-      e.stopPropagation();
-      const nameInput = $('newEngName');
-      const urlInput = $('newEngUrl');
-      const name = nameInput.value.trim();
-      let url = urlInput.value.trim();
-      if (!name || !url) return;
-      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-      const all = getEngines();
-      const id = 'custom_' + Date.now();
-      const ch = name[0].toUpperCase();
-      all.push({ id, name, ch, url, enabled: true, custom: true });
-      saveEngines(all);
-      nameInput.value = '';
-      urlInput.value = '';
-      renderEngineSettings();
-    });
-  }
-  renderEngineSettings();
 
   const note = $('cityNote');
   const showPlace = async () => {
@@ -247,7 +183,6 @@ export function initSettings(onWeather, onUnits) {
     build();
     buildWidgets();
     showPlace();
-    renderEngineSettings();
     langUpd(false);
     segs.forEach(u => u(false));
     iconsCheck.checked = iconsOn();
@@ -257,6 +192,5 @@ export function initSettings(onWeather, onUnits) {
     buildWidgets();
     build();
     showPlace();
-    renderEngineSettings();
   });
 }

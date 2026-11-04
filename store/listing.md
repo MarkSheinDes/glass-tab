@@ -14,7 +14,7 @@
 ## Подробное описание — EN
 Glass Tab turns every new tab into a calm, beautiful glass-style dashboard.
 
-✦ Smart search bar — type a calculation like (25+17)*3, "5 km to miles" or "72 F to C" and get the answer instantly. Pick your favorite search engine or add your own.
+✦ Smart search bar — type a calculation like (25+17)*3, "5 km to miles" or "72 F to C" and get the answer instantly. Searches go through the search engine you chose in your browser.
 ✦ Weather — current conditions, 24-hour temperature graph, 3-day forecast and a short tip. Celsius or Fahrenheit.
 ✦ Tasks — a to-do list with a progress ring.
 ✦ Calendar — month view with today highlighted.
@@ -59,6 +59,7 @@ Replaces the browser's New Tab page with a customizable dashboard (search, weath
 
 ## Обоснование разрешений (Permission justification)
 - `chrome_url_overrides.newtab` — это и есть основная функция: заменяет страницу новой вкладки.
+- `search` — отправляет запрос из строки поиска в поисковик, выбранный пользователем в браузере (Search API). Ничего не читает и не меняет.
 - Optional `bookmarks` — запрашивается только по нажатию «Закладки»; показывает список закладок, ничего не изменяет.
 
 ## Раздел «Конфиденциальность» (Privacy practices)

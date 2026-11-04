@@ -112,10 +112,6 @@ export const TRANSLATIONS = {
     cityNow: 'Сейчас: ',
     tempLabel: 'Температура',
 
-    enginesLabel: 'Поисковые системы',
-    engNamePlaceholder: 'Название (напр. DuckDuckGo)',
-    engUrlPlaceholder: 'URL поиска (с %s или без)',
-    engAddBtn: '+ Добавить поисковик',
 
     appearanceLabel: 'Оформление и читаемость',
     contrastCheck: 'Повышенная контрастность',
@@ -319,10 +315,6 @@ export const TRANSLATIONS = {
     cityNow: 'Current: ',
     tempLabel: 'Temperature',
 
-    enginesLabel: 'Search Engines',
-    engNamePlaceholder: 'Name (e.g. DuckDuckGo)',
-    engUrlPlaceholder: 'Search URL (with %s or without)',
-    engAddBtn: '+ Add search engine',
 
     appearanceLabel: 'Appearance & Accessibility',
     contrastCheck: 'High contrast',
