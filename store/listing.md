@@ -29,6 +29,8 @@ Glass Tab turns every new tab into a calm, beautiful glass-style dashboard.
 
 Privacy first: no accounts, no tracking, no ads. Your tasks, notes and settings never leave your browser. The only network requests are the weather (Open-Meteo) and site icons — see the privacy policy.
 
+Works in Chrome, Edge, Brave and Firefox. Not supported in Opera and Yandex Browser: they do not let extensions replace the new tab page.
+
 Free and open source (MIT). If you enjoy it, you can support the project from the settings panel.
 
 ## Подробное описание — RU
@@ -48,6 +50,8 @@ Glass Tab превращает каждую новую вкладку в спо�
 ✦ Быстро на любом ПК — режим экономии отключает размытие и эффекты; режим повышенной контрастности.
 
 Конфиденциальность прежде всего: без аккаунтов, слежки и рекламы. Дела, заметки и настройки не покидают ваш браузер. Единственные сетевые запросы — погода (Open-Meteo) и значки сайтов; подробности в политике конфиденциальности.
+
+Работает в Chrome, Edge, Brave и Firefox. Не поддерживается в Opera и Яндекс Браузере: они не позволяют расширениям заменять страницу новой вкладки.
 
 Бесплатно, код открыт (MIT). Если нравится, поддержать проект можно в настройках.
 

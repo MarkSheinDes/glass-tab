@@ -1,7 +1,9 @@
 # Glass Tab
 
-A calm, glass-style new tab page for Chrome, Edge and Firefox.
+A calm, glass-style new tab page for Chrome, Edge, Brave and Firefox.
 Smart search (calculator and unit converter), weather, tasks, calendar, focus timer, notes, quick clipboard, 30 wallpapers or your own picture, a customizable dock. English and Russian.
+
+Not supported: Opera and Yandex Browser — they block extensions from replacing the new tab page.
 
 **Privacy first:** no accounts, no analytics, no ads. Everything you create stays in your browser. See the [privacy policy](https://marksheindes.github.io/glass-tab/privacy.html).
 
@@ -29,7 +31,9 @@ creates `dist/GlassTab-<version>.zip` (Chrome / Edge) and `dist/GlassTab-<versio
 
 # Glass Tab (по-русски)
 
-Спокойная новая вкладка в стиле стекла для Chrome, Edge и Firefox: умный поиск с калькулятором и конвертером единиц, погода, дела, календарь, таймер фокуса, заметки, быстрый буфер, 30 обоев или своя картинка, настраиваемая нижняя панель. Интерфейс на английском и русском.
+Спокойная новая вкладка в стиле стекла для Chrome, Edge, Brave и Firefox: умный поиск с калькулятором и конвертером единиц, погода, дела, календарь, таймер фокуса, заметки, быстрый буфер, 30 обоев или своя картинка, настраиваемая нижняя панель. Интерфейс на английском и русском.
+
+Не поддерживаются Opera и Яндекс Браузер: они не позволяют расширениям заменять страницу новой вкладки.
 
 Конфиденциальность: без аккаунтов, аналитики и рекламы, все данные остаются в вашем браузере.
 
