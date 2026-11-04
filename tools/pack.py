@@ -1,5 +1,5 @@
 """Собирает zip для магазинов (без store/, tools/, dist/).
-Два пакета: для Chrome / Edge / Opera / Yandex и для Firefox (тот же код, манифест дополнен настройками Firefox)."""
+Два пакета: для Chrome / Edge / Yandex и для Firefox (тот же код, манифест дополнен настройками Firefox)."""
 import json, os, zipfile
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

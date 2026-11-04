@@ -78,5 +78,4 @@ Replaces the browser's New Tab page with a customizable dashboard (search, weath
 1. Chrome Web Store (разовый взнос $5): https://chrome.google.com/webstore/devconsole
 2. Microsoft Edge Add-ons (бесплатно, тот же zip): https://partner.microsoft.com/dashboard/microsoftedge
 3. Firefox (AMO, бесплатно): загрузите `GlassTab-<версия>-firefox.zip`: https://addons.mozilla.org/developers/ (в нём уже есть идентификатор расширения и отметка «данные не собираются»).
-4. Opera Add-ons (бесплатно, тот же zip, что для Chrome), по желанию.
-Оба zip собираются командой `python tools/pack.py` → `dist/` (`GlassTab-<версия>.zip` для Chrome/Edge/Opera и `...-firefox.zip` для Firefox).
+Оба zip собираются командой `python tools/pack.py` → `dist/` (`GlassTab-<версия>.zip` для Chrome/Edge и `...-firefox.zip` для Firefox).
